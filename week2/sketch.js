@@ -36,5 +36,4 @@ function draw() {
   fill(200, 15, 20);
   triangle(originX, originY, originX + 60, originY, originX + 30, originY + 160);
 
-
 }
