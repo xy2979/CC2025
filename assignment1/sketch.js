@@ -3,6 +3,7 @@ let pinkColor = "#f7befaff";
 let greenColor = "#64E2B7";
 let yellowColor = "#FBF3C1";
 let transColor = "#8dffaf84";
+let transColor2 = "#cf3cf43d";
 let orangeColor = "#ffcf30ff";
 let blueColor = "#66D2CE";
 let lightPurple = "#e484ffff";
@@ -194,6 +195,7 @@ function draw() {
   noStroke();
 
   triangle(width / 6.518, height / 3.05, width / 10, height / 1.23, width / 4.8, height / 1.23);//big one
+  fill(transColor2);
   triangle(width / 6.518, height / 1.427, width / 10, height / 1.23, width / 4.8, height / 1.23);//small one
 
 
@@ -245,7 +247,9 @@ function draw() {
   fill(transColor);
   //middle left triangle
   triangle(width / 2.22, height / 3.97, width / 2.22, height / 1.4127, width / 1.818, height / 1.4127);
+
   //middle right triangle
+  fill(transColor2);
   triangle(width / 1.818, height / 2.912, width / 2.22, height / 1.4127, width / 1.818, height / 1.4127);
   
   fill(lightPurple);
