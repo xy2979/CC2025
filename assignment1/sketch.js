@@ -379,12 +379,13 @@ function draw() {
   vertex(width/1.15485, height/2.2896);//bottom left coord
   endShape();
 
-
-  //left arc
+  //arc
   noFill();
   stroke(lightPurple);
   strokeWeight(20);
+  //The caps for line endings are either rounded (ROUND), squared (SQUARE), or extended (PROJECT). The default cap is ROUND.
   strokeCap(SQUARE);
+  //left arc
   arc(width / 6.47, height / 3.05-height / 16.11, width / 13.396, height / 10.11, radians(10), radians(170));
 
   noFill();
