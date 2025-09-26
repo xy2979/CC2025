@@ -16,10 +16,10 @@ function setup() {
 
 function draw() {
   background("#f8a0a0ff");
-  noLoop(); //prevents from looping
+  //noLoop(); //prevents from looping
   for (let y = 50; y < height - 50; y += 100){
     
-    for (let x = 50; x < width - 50; x += 80) {
+    for (let x = 50; x < width - 50; x += 100) {
       //circle(x, 50, 100);
       push();
       translate(x, y);
@@ -37,7 +37,7 @@ function draw() {
       randomXDisp = random(-y * randomAmount, y * randomAmount);
       randomYDisp = random(-y * randomAmount, y * randomAmount);
       if (mouseIsPressed == true) {
-        translate(randomXDisp, 0);
+        translate(randomXDisp, randomYDisp);
       }
 
       strokeWeight(3);
