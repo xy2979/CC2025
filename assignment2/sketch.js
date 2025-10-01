@@ -23,7 +23,10 @@ function draw() {
     background("#7597F9"); //otherwise use this color as background
   }
 
-
+  //I set the coordinate to x = 50, y = 50
+  //the pattern on x-axis will stop at "width-50" 
+  //the pattern on y-axis will stop at "height-50"
+  //the gap between each pattern is 100
   for (let y = 50; y < height - 50; y += 100) {
     
     for (let x = 50; x < width - 50; x += 100) {
@@ -35,11 +38,13 @@ function draw() {
       let randomAmount = 0.01;
       let randomXDisp;
       let randomYDisp;
-
+      //randomXDisp and randomYDips will shake along y-axis
+      //when y is bigger, the patterns shake harder
       randomXDisp = random(-y * randomAmount, y * randomAmount);
       randomYDisp = random(-y * randomAmount, y * randomAmount);
       
       if (mouseIsPressed == true) {
+        //if mouse is pressed, move the coordinate to the randomXDisp
         translate(randomXDisp, randomYDisp);
         changeColor = "#ffc9c2ff";
         changeColor2 = "#9dd9efff";
