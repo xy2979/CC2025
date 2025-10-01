@@ -6,22 +6,29 @@ function setup() {
 }
 
 function draw() {
-
-  if (mouseX>width/2 && mouseY>height/2) {//if the test inside the () is met...
+  //setup a variable for future color changing
+  let changeColor = "#FCBB01";
+  let changeColor2 = "#ffeeb0";
+  let changeColor3 = "#7597F9";
+  let changeColor4 = "#6FCED0";
+  
+  //if mouseX > width/2 and mouseY>height/2, change the background
+  if (mouseX>width/2 && mouseY>height/2) {
         background("#FFEEB0");
         
       } else if (mouseX < width / 2 && mouseY < height / 2) {
        background("#644098");
   }
   else {
-    background("#7597F9");
+    background("#7597F9"); //otherwise use this color as background
   }
+
+
   for (let y = 50; y < height - 50; y += 100) {
     
     for (let x = 50; x < width - 50; x += 100) {
 
       push();
-      //background("#7597F9");
       noStroke();
       //move the coordinate matrix to (50, 50)
       translate(x, y);
@@ -31,10 +38,15 @@ function draw() {
 
       randomXDisp = random(-y * randomAmount, y * randomAmount);
       randomYDisp = random(-y * randomAmount, y * randomAmount);
+      
       if (mouseIsPressed == true) {
         translate(randomXDisp, randomYDisp);
-        fill("#ffc9c2ff");
-        rect(-25, -25, 50, 50, 50);
+        changeColor = "#ffc9c2ff";
+        changeColor2 = "#9dd9efff";
+        changeColor3 = "#d6a0faff";
+        changeColor4 = "#4DFFBE";
+        //fill("#ffc9c2ff");
+        //rect(-25, -25, 50, 50, 50);
       }
 
       //map the angle use mouseX:0 to width – 0 to 360
@@ -42,49 +54,49 @@ function draw() {
       angle = map(mouseX, 0, width, 0, 360);
       rotate(radians(angle));
       //make a variable to hold scale amount
-      //map the scaleFactor use mosueY: 0 to height – 0.5 to 1
+      //map the scaleFactor use mouseY: 0 to height – 0.5 to 2.5
       let scaleFactor;
-      scaleFactor = map(mouseY, 0, height, 0.5, 2);
+      scaleFactor = map(mouseY, 0, height, 0.3, 3);
       scale(scaleFactor);
       //make a variable to hold rotation
-      let rotation;
-      rotation = map(y, 50, height-100, 0, radians(360));
-      rotate(rotation);
+      //map the rotation to use y: 50 to height-100 – 0 to 360 degrees
+      let rotationY;
+      rotationY = map(y, 50, height-50, 0, radians(360));
+      rotate(rotationY);
+      let rotationX;
+      rotationX = map(x, 50, width - 50, 0, radians(360));
+      rotate(rotationX);
 
-      if (mouseX>width/2 && mouseY>height/2) {//if the test inside the () is met...
-        //background("#7597F9");
+      if (mouseX>width/2 && mouseY>height/2) {
         //draw multiple circles
-        fill("#7597F9");
-        circle(0, 0, 25);
-        circle(0, -20,10);
-        circle(0, 20, 10);
-        circle(20, 0, 10);
-        circle(-20, 0, 10);
-        fill("#6FCED0");//center circle color
-        circle(20, 20, 20);//center circle size
+        fill(changeColor3);
+        circle(0, 0, 25); //center circle
+        circle(0, -20,10); //top small circle
+        circle(0, 20, 10); //bottom small circle
+        circle(20, 0, 10); //right small circle
+        circle(-20, 0, 10); //left small circle
+        fill(changeColor4);//circles around the blue ones
+        circle(20, 20, 20);
         circle(-20, 20, 20);
         circle(-20, -20, 20);
         circle(20, -20, 20);
         
       } else if (mouseX < width / 2 && mouseY < height / 2) {
-        //background("#644098");
+        
         //draw petals
-        fill("#ffeeb0");//big petal color
-        //ellipse(0, 0, 120, 105);
-        circle(-25, -25, 50);//big circle
-        circle(25, 25, 50);
-        //rect(0, 0, 50, 50);//big rect
-        fill("#FCBB01");//small petal color
-        circle(-25, 25, 50);//small circle
-        circle(25, -25, 50);
-        //rect(25, 25, 25, 25);//small rect
+        fill(changeColor2);
+        circle(-25, -25, 50);//top left circle
+        circle(25, 25, 50);//bottom right circle
+        fill(changeColor);
+        circle(-25, 25, 50);//bottom left circle
+        circle(25, -25, 50);//top right circle
       }
       else {//otherwise
         //run this other code
-        fill("#FCBB01");
+        fill(changeColor);
         circle(-25, 25, 25);
         circle(25, -25, 25);
-        fill("#6FCED0");
+        fill(changeColor4);
         arc(-25, 0, 50, 50, radians(180), radians(360));
         arc(25, 0, 50, 50, radians(0), radians(180));
       }
