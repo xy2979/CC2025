@@ -32,7 +32,6 @@ I collected different food illustrations.
 - preload, loadImage
 - image
 - rotate
-- 
 
 #### The way I calculated the position in Illustrator
 I used the ruler feature in illustrator to measure the x, y coordinator and get the proportion.

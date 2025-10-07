@@ -19,7 +19,7 @@ function setup() {
 }
 
 ///use https://svg2p5.com/ website to convert my illustrator svg to p5js code
-//The reason I used a converter is that I tried to import the dumpling.png into p5js but it's too blury, I'm not satisfied with it
+//The reason I used a converter is that I tried to import the dumpling.png into p5js but it's too blury, I was not satisfied with it
 // I find it on google by searching "svg to p5js code converter", not sure who is the author
 // Converter draws a complete dumpling for me///////////////////////////
 function drawDumpling() {
@@ -130,24 +130,26 @@ function draw() {
   if (eatDumpling < 18) {
     //Woodcoaster////////
     push();
-    //translate width = 2500/1108; translate height = 1600/201
     //2500, 1600 is the max width and height in Illustrator
+    //translate width = 2500/1108 = 2.256; translate height = 1600/201 = 7.96
     //the original coord of woordcoaster is (1108, 201)
     translate(width / 2.256, height / 7.96);
+    // the rotate degrees in illustrator is 5.543
     rotate(radians(-5.543));
     scale(1);
-    // woodCoaster width = 2500/1325; image height = 1600/1146
     // woodCoaster width I measured in illustrator: 2433-1108=1325
     // woodCoaster height I measured in illustrator: 1347-201=1146
+    // woodCoaster width = 2500/1325=1.8867; image height = 1600/1146=1.3961
     image(woodCoaster, 0, 0, width / 1.8867, height / 1.3961);
     pop();
   }
 
+  //whiteplate is above the woodcoaster layer, so I put the code after woodcoaster code
   if (eatDumpling < 16) {//when eatDumpling = 16, sec = 48, whiteplate disappears
     //WhitePlate/////////
     push();
-    //translate width = 2500/1232; translate height = 1600/61
     //the original coord of whiteplate is (1232, 61)
+    //translate width = 2500/1232=2.029; translate height = 1600/61=26.229
     translate(width/2.029, height/26.229);
     // whitePlate width proportion = 2500/(2576-1232); height proportion = 1600/(1405-61)
     //Then I tested on the browser, it does not meet my expectation
@@ -156,18 +158,18 @@ function draw() {
     pop();
   }
 
-  //The reason that I let PeterJoes disappears last is that I usually throw away the packaging bag last.
+  //The reason that I let PeterJoes disappears last is that in the real world I usually throw away the packaging bag last.
   if (eatDumpling < 19) {//when Peterjoes = 19, sec = 57, peterJoes disappears
     //PeterJoes//////
     push();
-    //translate width = 2500/189; translate height = 1600/689
     //the original coord of woordcoaster is (189, 689)
+    //translate width = 2500/189=13.227; translate height = 1600/689=2.322; but the height is too low, I adjusted to 2.522
     translate(width / 13.227, height / 2.522);
     //360-337(the degrees in illustrator)=23
     rotate(radians(23));
-    // peterjoes width proportion = 2500/1031; height proportion = 1600/1258
-    //Then I tested on the browser, it does not meet my expectation
-    //I decide to go with fixed number(1000, 800)
+    // peterjoes width proportion = 2500/1031=2.4248; height proportion = 1600/1258=1.2718
+    //Then I tested on the browser. I didn't like the width, it was too wide.
+    //So I decided to go with 2.824.
     image(peterJoes, 0, 0, width / 2.824, height / 1.2718);
     pop();
 
@@ -176,8 +178,9 @@ function draw() {
     rotate(radians(23));
     textSize(25);
     textFont('Britania_Ligatura');
-    //original coord in illustrator is (460, 861) but I'm not satisfied with the position
-    //So I tested different numbers that's why I get 3.47 and 2.6183
+    //original coord in illustrator is (460, 861) 
+    //2500/460=5.43； 1600/861=1.85，but I'm not satisfied with the position
+    //So I adjusted the position a little bit, that's why I get 3.47 and 2.6183
     text('Exp: ' + month() + ' / ' + day() + ' / ' + year(), width / 3.47, height / 2.6183);
     pop();
   }
@@ -188,10 +191,11 @@ function draw() {
   //Complete Dumpling--1st on top///////
   push();
   //original coord in illustrator:(1535, 182)
-  //2500/1535; 1600/182
+  //2500/1535=1.628; 1600/182=8.791
   translate(width/1.628, height/8.791);
-  //dumpling x-distance: 1977-1535=442; dumpling y-distance: 405-182=223
-  //2500/442=5.56; 1600/223=7.17 
+  //dumpling x-distance in illustrator: 1977-1535=442; dumpling y-distance in illustrator: 405-182=223
+  //2500/442=5.56; 1600/223=7.17 I tried the proportion and I was not satisfied with it.
+  //So I just let the dumpling scale divided by the illustrator width (2500), and it's still too big. I tested out and finally chose 2900.
   scale(width/2900);
   drawDumpling();
   pop();
@@ -199,9 +203,9 @@ function draw() {
     //Half Dumpling--1st on top
     push();
     //original coord in illustrator:(1535, 182)
-    //2500/1535; 1600/182
+    //2500/1535=1.628; 1600/182=8.791
     translate(width/1.628, height/8.791);
-    //After my calculation, [complete dumpling scale] : [half dumpling scale] = 0.5 : 0.13
+    //After my testing, [complete dumpling scale] : [half dumpling scale] = 0.5 : 0.13
     //0.13/0.5=0.26
     scale(width/2900*0.26);
     drawHalfDumpling();
@@ -212,10 +216,8 @@ function draw() {
     //Complete Dumpling--1st one on second line///////
     push();
     //original coord in illustrator: (1352, 458)
-    //2500/1352; 1600/458
-    translate(width/1.89, height/3.493);
-    //dumpling x-distance: 1977-1535=442; dumpling y-distance: 405-182=223
-    //2500/442=5.56; 1600/223=7.17 
+    //2500/1352=1.849; 1600/458=3.493
+    translate(width/1.849, height/3.493);
     scale(width/2900);
     drawDumpling();
     pop();
@@ -223,9 +225,9 @@ function draw() {
     //Half Dumpling--1st one on second line///////
     push();
     //original coord in illustrator: (1352, 458)
-    //2500/1352; 1600/458
-    translate(width/1.89, height/3.493);
-    //After my calculation, [complete dumpling scale] : [half dumpling scale] = 0.5 : 0.13
+    //2500/1352=1.849; 1600/458=3.493
+    translate(width/1.849, height/3.493);
+    //After my testing, [complete dumpling scale] : [half dumpling scale] = 0.5 : 0.13
     //0.13/0.5=0.26
     scale(width/2900*0.26);
     drawHalfDumpling();
@@ -236,20 +238,18 @@ function draw() {
     //Complete Dumpling--2nd one on second line///////
     push();
     //original coord in illustrator: (1966, 318)
-    //2500/1966; 1600/318
+    //2500/1966=1.2716; 1600/318=5.03
     translate(width/1.2716, height/5.03);
-    //dumpling x-distance: 1977-1535=442; dumpling y-distance: 405-182=223
-    //2500/442=5.56; 1600/223=7.17 
     scale(width/2900);
     drawDumpling();
     pop();
   } else if (eatDumpling < 6) {//when eatDumpling = 6, sec = 18, eatDumpling becomes halfDumpling
     //Half Dumpling--2nd one on second line///////
     push();
-     //original coord in illustrator: (1966, 318)
-    //2500/1966; 1600/318
+    //original coord in illustrator: (1966, 318)
+    //2500/1966 = 1.2716; 1600/318 = 5.03
     translate(width/1.2716, height/5.03);
-    //After my calculation, [complete dumpling scale] : [half dumpling scale] = 0.5 : 0.13
+    //After my testing, [complete dumpling scale] : [half dumpling scale] = 0.5 : 0.13
     //0.13/0.5=0.26
     scale(width/2900*0.26);
     drawHalfDumpling();
@@ -262,8 +262,6 @@ function draw() {
     //original coord in illustrator: (1352, 725)
     // 2500/1352=1.849; 1600/725=2.206
     translate(width/1.849112, height/2.206);
-    //dumpling x-distance: 1977-1535=442; dumpling y-distance: 405-182=223
-    //2500/442=5.56; 1600/223=7.17 
     scale(width/2900);
     drawDumpling();
     pop();
@@ -273,7 +271,7 @@ function draw() {
     //original coord in illustrator: (1352, 725)
     // 2500/1352=1.849; 1600/725=2.206
     translate(width/1.849112, height/2.206);
-    //After my calculation, [complete dumpling scale] : [half dumpling scale] = 0.5 : 0.13
+    //After my testing, [complete dumpling scale] : [half dumpling scale] = 0.5 : 0.13
     //0.13/0.5=0.26
     scale(width/2900*0.26);
     drawHalfDumpling();
@@ -286,8 +284,6 @@ function draw() {
     //original coord in illustrator: (1795, 611)
     // 2500/1795=1.3927; 1600/611=2.6186
     translate(width/1.3927, height/2.6186);
-    //dumpling x-distance: 1977-1535=442; dumpling y-distance: 405-182=223
-    //2500/442=5.56; 1600/223=7.17 
     scale(width/2900);
     drawDumpling();
     pop();
@@ -297,7 +293,7 @@ function draw() {
     //original coord in illustrator: (1795, 611)
     // 2500/1795=1.3927; 1600/611=2.6186
     translate(width/1.3927, height/2.6186);
-    //After my calculation, [complete dumpling scale] : [half dumpling scale] = 0.5 : 0.13
+    //After my testing, [complete dumpling scale] : [half dumpling scale] = 0.5 : 0.13
     //0.13/0.5=0.26
     scale(width/2900*0.26);
     drawHalfDumpling();
@@ -310,8 +306,6 @@ function draw() {
     //original coord in illustrator: (1572, 978)
     // 2500/1572=1.590; 1600/978=1.63599
     translate(width/1.590, height/1.63599);
-    //dumpling x-distance: 1977-1535=442; dumpling y-distance: 405-182=223
-    //2500/442=5.56; 1600/223=7.17 
     scale(width/2900);
     drawDumpling();
     pop();
@@ -321,7 +315,7 @@ function draw() {
     //original coord in illustrator: (1572, 978)
     // 2500/1572=1.590; 1600/978=1.63599
     translate(width/1.590, height/1.63599);
-    //After my calculation, [complete dumpling scale] : [half dumpling scale] = 0.5 : 0.13
+    //After my testing, [complete dumpling scale] : [half dumpling scale] = 0.5 : 0.13
     //0.13/0.5=0.26
     scale(width/2900*0.26);
     drawHalfDumpling();
@@ -334,8 +328,6 @@ function draw() {
     //original coord in illustrator: (1961, 879)
     // 2500/1961=1.2748; 1600/879=1.8583
     translate(width/1.2748, height/1.8183);
-    //dumpling x-distance: 1977-1535=442; dumpling y-distance: 405-182=223
-    //2500/442=5.56; 1600/223=7.17 
     scale(width/2900);
     drawDumpling();
     pop();
@@ -345,7 +337,7 @@ function draw() {
     //original coord in illustrator: (1961, 879)
     // 2500/1961=1.2748; 1600/879=1.8583
     translate(width/1.2748, height/1.8183);
-    //After my calculation, [complete dumpling scale] : [half dumpling scale] = 0.5 : 0.13
+    //After my testing, [complete dumpling scale] : [half dumpling scale] = 0.5 : 0.13
     //0.13/0.5=0.26
     scale(width/2900*0.26);
     drawHalfDumpling();
@@ -357,7 +349,7 @@ function draw() {
     push();
     //original coord of chopsticks(-227, 120)
     translate(227/2500*-width, height/13.33); // height=1600/120
-    // chopsticks width proportion = 2500/(1060+227); height proportion = 1600/(498-120)
+    // chopsticks width proportion = 2500/(1060+227)=1.9425; height proportion = 1600/(498-120)=4.2328
     image(chopsticks, 0, 0, width/1.9425, height/4.2328)
     pop();
   }
@@ -366,8 +358,9 @@ function draw() {
   if (eatDumpling < 17) {//when eatDumpling = 17, sec = 51, suace disappears
     //sauce/////////
     push();
-    //2500/790, 1600/559
-    translate(width/3.164, height/2.86);
+    //sauce width proportion = 2500/790=3.14; height proportion = 1600/559=2.8622
+    translate(width / 3.14, height / 2.86);
+    //I previously let sauce be scalable but sometimes it got too small or too big. So I let it be a fixed number 200.
     image(sauce, 0, 0, 200, 200);
     pop();
   }
