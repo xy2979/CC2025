@@ -19,7 +19,9 @@ function setup() {
 }
 
 ///use https://svg2p5.com/ website to convert my illustrator svg to p5js code
-//Draw a complete dumpling///////////////////////////
+//The reason I used a converter is that I tried to import the dumpling.png into p5js but it's too blury, I'm not satisfied with it
+// I find it on google by searching "svg to p5js code converter", not sure who is the author
+// Converter draws a complete dumpling for me///////////////////////////
 function drawDumpling() {
   stroke("#740C8C");
   strokeWeight(1.5);
@@ -68,7 +70,7 @@ function drawDumpling() {
 }
 ///////////Complete Dumpling svg is over////////////////////
 
-//Draw a half-bitten dumpling/////////////////
+//Converter draws a half-bitten dumpling for me/////////////////
 function drawHalfDumpling() {
   stroke("#740C8C");
   strokeWeight(5);
@@ -115,12 +117,16 @@ function drawHalfDumpling() {
 
 function draw() {
   background("#e2c69E");
-  //Make dumpling bitten! part/////////////////////////////////////////////////////
+  //Animate dumplings  part/////////////////////////////////////////////////////
   //Map dumpling use second()
   //I want the dumpling's state change every 3 seconds, 60/3=20
   //So in 1 min, all dumplings can be eaten
+  //I mapped (0, 60, 0, 20) before, I noticed that sec 60 = sec 0, they are the same. So I used 59.
   let eatDumpling = map(second(), 0, 59, 0, 20);
 
+  //woodcoaster is the last layer of the design, since in function draw() it goes in a loop, I put woodcoaster's code first to avoid it covers other layers
+  //I also want to design that after eating all the dumplings, I need to clear up my dining table.
+  //when eatDumpling = 18, sec = 54, woodcoaster disappears
   if (eatDumpling < 18) {
     //Woodcoaster////////
     push();
@@ -150,7 +156,8 @@ function draw() {
     pop();
   }
 
-  if (eatDumpling < 19) {
+  //The reason that I let PeterJoes disappears last is that I usually throw away the packaging bag last.
+  if (eatDumpling < 19) {//when Peterjoes = 19, sec = 57, peterJoes disappears
     //PeterJoes//////
     push();
     //translate width = 2500/189; translate height = 1600/689
@@ -367,7 +374,9 @@ function draw() {
 
 
 
-///////////////DUMPLING PART!!//////////////////
+  /////////////// Rest of the code is the DUMPLING code drafts! //////////////////
+  //I first determined the positions of dumplings using the code below, and then incorporate it into the push() and pop() functions.
+
   // //Complete Dumpling--1st on top///////
   // push();
   // //original coord in illustrator:(1535, 182)

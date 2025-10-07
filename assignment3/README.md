@@ -19,58 +19,22 @@ I collected different food illustrations.
 
 ![image description](/assignment3/CC2025_AbstractClock.png)
 
-### Process of converting illustrator svg to p5js code
+#### Process of converting illustrator svg to p5js code
 ![image description](/assignment3/Screenshot%202025-10-03%20at%2011.36.24 PM.png)
 
-### Functions I use
+#### Functions I use
 - year()
 - month()
 - second()
 - if, else
+- translate
+- scale
+- preload, loadImage
+- image
+- rotate
 - 
-- 
 
-**bold text**
+#### The way I calculated the position in Illustrator
+I used the ruler feature in illustrator to measure the x, y coordinator and get the proportion.
+![image description](/assignment3/Screenshot%202025-10-06%20at%201.18.28 AM.png)
 
-*italicized text*
-
-~~strikethrough text~~
-
-Ordered List:
-1. First item
-2. Second item
-3. Third item
-
-Unordered List:
-- First item
-- Second item
-- Third item
-
-`short code block`
-
-```
-extended code block
-fun() {
-  return 0
-}
-```
-
-Link:  
-[linked text](https://www.example.com)
-
-
-Image with url:  
-![image description](https://dm-gy-6063-2024f-b.github.io/assets/homework/02/clark-espaco-modulado-00.jpg)
-
-
-Image on repo:  
-![image description](./file-name.jpg)
-
-
-To start a new line, add two spaces at the end of a line, like this:  
-this is a new line.
-
-
-To start a new paragraph, leave an empty line between two lines of text.
-
-This is a new paragraph.
