@@ -19,7 +19,7 @@ function setup() {
 }
 
 ///use https://svg2p5.com/ website to convert my illustrator svg to p5js code
-//The reason I used a converter is that I tried to import the dumpling.png into p5js but it's too blury, I was not satisfied with it
+//The reason I used a converter is that I tried to import the dumpling.png into p5js using loadImage function but it's too blury, I was not satisfied with it
 // I find it on google by searching "svg to p5js code converter", not sure who is the author
 // Converter draws a complete dumpling for me///////////////////////////
 function drawDumpling() {

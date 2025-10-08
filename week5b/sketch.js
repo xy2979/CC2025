@@ -10,10 +10,14 @@ let circleY = 0;
 let thetaY = 0;
 let radiusY = 100;
 
+let prevMillis = 0; //giving an initial values to 0
+let prevSecond = 0;
+
 function setup() {
   createCanvas(windowWidth, windowHeight);
   circleX = width / 2;
   circleY = height / 2;
+  prevSecond = second();
 
 }
 
@@ -59,4 +63,15 @@ function draw() {
     let y = sin(radians(theta)) * radiusY;
     circle(x, y, circleD);
   }
+
+  if (second() != prevSecond) {
+    prevSecond = second(); //set the new "previous" second to current time
+    prevMillis = millis(); // new stopwatch time is current time
+
+  }
+  if (millis() - prevMillis >= 1000) {
+    prevMillis = millis(); // new stopwatch time is current time
+  }
+  let millisecond = millis() - prevMillis;
+  circle(0, 0, millisecond);
 }
