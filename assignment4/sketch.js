@@ -15,22 +15,34 @@ function setup() {
 //Previously I used mouseIsPressed, but when I pressed, it came out a lot of flavor at one time, as it depends on the duration I pressed
 //So I switched to mouseClicked, it is more precise.
 function mouseClicked() {
+
   //I want when I clicked, one flavor will come out randomly
   let donutFlavor = ["strawberry", "chocolate", "plain", "matcha", "sky", "vanilla"];
   let choice = random(donutFlavor);
-  let donutSize = random(100, 150);
-  let isDraw = true;
   
+  //I want the donut size between 100-150 randomly
+  let donutSize = random(100, 150);
+  
+  //Previously, I didn't use boolean function, when I clicked on the donut I want to delete, it will automatically appear the one I just click
+  //It is really annoying! So i have to make the boolean
+  //So right now, I want to draw the donut when I click my mouse, everything is correct.
+  let drawDonut = true;
+  
+  //Since I want to delete my donut when I click the donut again, I need to know whether my mouseX and mouseY is in the donuts that I drew
+  //So i used a for loop to record the donuts' index
   for (let p = 0; p < donuts.length; p++) {
+    //I referred to week5a code about detecting the mouseX, mouseY whether in the circle
     let distance = dist(mouseX, mouseY, donuts[p].x, donuts[p].y);
+    //the donut's size is diameter, it should be radius, so that I can know whether my mouseX, Y is inside the donuts
     if (distance < donuts[p].size / 2) {
+      //I used splice to delete 1 donut start from index p
       donuts.splice(p, 1);
-      isDraw = false;
+      
+      drawDonut = false;
     }
   }
-    //print(donuts[p].size);
   
-    if (isDraw) {
+    if (drawDonut===true) {
       donuts[donuts.length] = new Donut(mouseX, mouseY, choice, donutSize);
       print(donuts.length);
     }
