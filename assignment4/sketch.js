@@ -6,14 +6,14 @@ let donuts = [];
 //set up a background color that I can change easily for future
 let bgcolor = "#b49b7aff";
 
-
+//see my donut sketch in readme file
 
 function setup() {
   createCanvas(windowWidth, windowHeight);
 
 }
 
-//I want one donut to appear per click
+//I want one donut to appear per click.
 //Previously I used mouseIsPressed, but when I pressed, it created a lot of donuts at one time, as it depends on the duration I pressed
 //So I switched to mouseClicked, it is more precise.
 function mouseClicked() {
