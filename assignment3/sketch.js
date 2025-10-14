@@ -5,6 +5,7 @@ let chopsticks;
 let sauce;
 let eatDumpling;
 
+//see more process in my Readme file
 //Import my png files I exported from illustrator to p5js///////////
 function preload() {
   woodCoaster = loadImage('./WoodCoaster.png');
