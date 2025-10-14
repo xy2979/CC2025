@@ -1,7 +1,9 @@
 // I want to save all the donuts that I've created
 let donuts = [];
 //At beginning, there's no donut on the screen, so i set it to 0
-//let donutAmount = 0;
+//let donutAmount = 0; I believe using donut.length is more accurate
+
+//set up a background color that I can change easily for future
 let bgcolor = "#b49b7aff";
 
 
@@ -11,39 +13,40 @@ function setup() {
 
 }
 
-//I want one donut appears once I clicked
-//Previously I used mouseIsPressed, but when I pressed, it came out a lot of flavor at one time, as it depends on the duration I pressed
+//I want one donut to appear per click
+//Previously I used mouseIsPressed, but when I pressed, it created a lot of donuts at one time, as it depends on the duration I pressed
 //So I switched to mouseClicked, it is more precise.
 function mouseClicked() {
-  //I want when I clicked, one flavor will come out randomly
+  //I want a random flavor to come out every time when I clicked
   let donutFlavor = ["strawberry", "chocolate", "plain", "matcha", "sky", "vanilla"];
   let choice = random(donutFlavor);
   
-  //I want the donut size between 100-150 randomly
+  //I want the donut size at 120
   let donutSize = 120;
   
-  //Previously, I didn't use boolean function, when I clicked on the donut I want to delete, it will automatically appear a donut that I just click
-  //It is really annoying! So i have to make the boolean. I referred to week5a code about set a variable for boolean.
-  // I want to draw the donut when I click my mouse.
+  //Previously, I didn't use boolean function, when I clicked on the donut I want to delete, a new donut will automatically appear where I click
+  //It is really annoying! So i created this boolean variable to determine whether or not to draw a new donut when i click. 
+  // I referred to week5a code about set a variable for boolean.
   let drawDonut = true;
   
-  //Since I want to delete my donut when I click the donut again, I need to know whether my mouseX and mouseY is in the donuts that I drew
-  //So i used a for loop to record the donuts' index
+  //Since I want to delete my donut that I clicked on, I need to know which donut my mouseX and mouseY is inside
+  //So i used a for loop to check each donut and delete the one that i clicked on
   for (let p = 0; p < donuts.length; p++) {
-    //I referred to week5a code about detecting the mouseX, mouseY whether in the circle
+    //I referred to week5a code about detecting the mouseX, mouseY whether in the donut
     let distance = dist(mouseX, mouseY, donuts[p].x, donuts[p].y);
-    //the donut's size is diameter, it should be radius, so that I can know whether my mouseX, Y is inside the donuts
+    //the donut's size is diameter, but the distance should be radius, so that I can know whether my mouseX, Y is inside the donuts
     if (distance < donuts[p].size / 2) {
-      //I used splice function to delete 1 donut start from index p
+      //I used splice function to delete 1 donut starting at index p
       donuts.splice(p, 1);
-      //This time I didn't want to draw donuts when I click mouse. I want to delete donut.
+      //This time I didn't want to draw a new donut since I 've deleted one. 
       drawDonut = false;
     }
   }
   
-  //since I've let drawDonut = true, I just write drawDonut this variable
+  //since I've let drawDonut = true, I just write drawDonut this variable in this function
+  //if no donut is clicked, then draw new donut
   if (drawDonut) {
-      //tell p5js that when meet drawDonut boolean, generate donut one by one
+      //create a new donut and add to the end of donuts array
       donuts[donuts.length] = new Donut(mouseX, mouseY, choice, donutSize);
       //print(donuts.length);
     }
@@ -54,10 +57,10 @@ function mouseClicked() {
 
 
   function draw() {
-  
+    //redraw background to cover deleted donut
     background(bgcolor);
 
-    //use for loop to draw donuts, one mouse click one donut 
+    //use for loop to draw donuts, once for every donut from the array by calling the drawDonut function
     for (let i = 0; i < donuts.length; i++) {
       donuts[i].drawDonut();
     }
@@ -84,7 +87,6 @@ function mouseClicked() {
       strokeWeight(1);
       stroke("#f8efd9ff");
       
-      //scale(this.size);
       //start to draw my strawberry flavor donut
       if (this.flavor === "strawberry") {
         fill("#F3D07f");
@@ -114,6 +116,7 @@ function mouseClicked() {
         //draw the chocolate glaze
         fill("#682800");
         circle(this.x, this.y, this.size - 15);
+        //I tested out all the numbers below, to make sure they evenly spread over the donut.
         //draw the sprinkles
         fill("#FF8DD7");
         circle(this.x - 5, this.y - 5, this.size * 0.1);
@@ -148,6 +151,7 @@ function mouseClicked() {
         //draw the vanilla glaze
         fill("#ffffffff");
         circle(this.x, this.y, this.size - 15);
+        //I tested out all the numbers below, to make sure they evenly spread over the donut
         //draw the orange sprinkles
         fill("#FF8C02");
         circle(this.x + 24, this.y + 20, this.size * 0.07);
@@ -169,8 +173,8 @@ function mouseClicked() {
         //draw the donut hole
         fill(bgcolor);
         circle(this.x, this.y, this.size * 0.3);
-
       }
+
       //draw my matcha flavor donut
       if (this.flavor === "matcha") {
         fill("#F3D07f");
@@ -182,9 +186,15 @@ function mouseClicked() {
         push();
         strokeWeight(3);
         stroke("#00762B");
-        line(this.x, this.y - 50, this.x - 50, this.y + 15);
+        //draw the matcha drizzle
+        //I tested out all the numbers below, to make sure they are parallel to each other
         line(this.x - 15, this.y - 50, this.x - 50, this.y - 5);
-        line()
+        line(this.x, this.y - 50, this.x - 50, this.y + 15);
+        line(this.x + 15, this.y - 49, this.x - 43, this.y + 29);
+        line(this.x + 30, this.y - 39, this.x - 29, this.y + 39);
+        line(this.x + 39, this.y - 29, this.x - 18, this.y + 47);
+        line(this.x + 46, this.y - 16, this.x - 3, this.y + 50);
+        line(this.x + 50, this.y - 2, this.x + 15, this.y + 47);
         pop();
         //draw the donut hole
         fill(bgcolor);
@@ -202,6 +212,8 @@ function mouseClicked() {
         push();
         strokeWeight(5);
         stroke("#FAFF00");
+        //draw the yellow sprinkle
+        //I tested out all the numbers below, to make sure they evenly spread over the donut
         line(this.x - 20, this.y + 20, this.x - 24, this.y + 24);
         line(this.x, this.y + 34, this.x - 4, this.y + 38);
         line(this.x - 4, this.y - 35, this.x - 8, this.y - 31);
