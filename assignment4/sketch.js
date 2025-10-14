@@ -22,7 +22,7 @@ function mouseClicked() {
   let choice = random(donutFlavor);
   
   //I want the donut size at 120
-  let donutSize = 120;
+  let donutSize = 150;
   
   //Previously, I didn't use boolean function, when I clicked on the donut I want to delete, a new donut will automatically appear where I click
   //It is really annoying! So i created this boolean variable to determine whether or not to draw a new donut when i click. 
@@ -69,7 +69,7 @@ function mouseClicked() {
     push();
     noStroke();
     fill("#f8efd9ff");
-    textSize(15);
+    textSize(25);
     textFont('Pixelify Sans');
     text('Welcome to Annie Donut!', 10, 30);
     text('Click to add a donut; click again to delete.', 10, 60);
