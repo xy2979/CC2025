@@ -38,8 +38,8 @@ function mousePressed() {
   let donutFlavor = ["strawberry", "matcha", "vanilla", "sky", "plain", "chocolate"];
   let choice = random(donutFlavor);
   
-  //I want each time pick a donut size randomly from (1 - 1.5)
-  let donutSize = random(1, 1.5);
+  //I want each time pick a donut scale randomly from (1 - 1.5)
+  let donutScale = random(1, 1.5);
   
   //Previously, I didn't use boolean function, when I clicked on the donut I want to delete, a new donut will automatically appear where I click
   //It is really annoying! So i created this boolean variable to determine whether or not to draw a new donut when i click. 
@@ -52,7 +52,8 @@ function mousePressed() {
     //I referred to week5a code about detecting the mouseX, mouseY whether in the donut
     let distance = dist(mouseX, mouseY, donuts[p].x, donuts[p].y);
     //the donut's size is diameter, but the distance should be radius, so that I can know whether my mouseX, Y is inside the donuts
-    if (distance < donuts[p].size / 2) {
+    //my actual donut's diameter is scale*diameter
+    if (distance < donuts[p].scale*donuts[p].diameter / 2) {
       //I used splice function to delete 1 donut starting at index p
       donuts.splice(p, 1);
       //This time I didn't want to draw a new donut since I 've deleted one. 
@@ -65,7 +66,7 @@ function mousePressed() {
   if (drawDonut) {
       //create a new donut and add to the end of donuts array
       //donuts.push = new Donut(mouseX, mouseY, choice, 120);
-      let tempDonut = new Donut(mouseX, mouseY, choice, donutSize);
+      let tempDonut = new Donut(mouseX, mouseY, choice, donutScale);
       donuts.push(tempDonut);
     }
   
@@ -73,11 +74,11 @@ function mousePressed() {
   
 
   class Donut {
-    constructor(x, y, flavor, size) {
+    constructor(x, y, flavor, scale) {
       this.x = x;
       this.y = y;
       this.flavor = flavor;
-      this.size = size;
+      this.scale = scale;
       this.diameter = 120;
     }
     drawDonut() {
@@ -87,7 +88,7 @@ function mousePressed() {
       push();
       translate(this.x, this.y);
       //scale the entire donut based on the size
-      scale(this.size);
+      scale(this.scale);
 
       //start to draw my strawberry flavor donut
       if (this.flavor === "strawberry") {
