@@ -16,7 +16,7 @@ function draw() {
   //Using for loop for my gradient background
   //It draws a line every 5 pixels from 0 to the height of the canvas
   //It also changes the hue of the stroke color from green to blue.
-  for (let y = 0; y < height; y += 5) {
+  for (let y = 0; y <= height; y += 5) {
     let hue = map(y, 0, height, 0, 180);
     stroke(hue, 100, 100);
     strokeWeight(5);
