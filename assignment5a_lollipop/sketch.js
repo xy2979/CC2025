@@ -2,7 +2,7 @@
 let annieX2 = 0;
 let annieY2 = 0;
 let annieNoisePosition2 = 0;
-let annieNoiseSpeed2 = 0.01;
+let annieNoiseSpeed2 = 0.05;
 let annieStartingPoint2 = 0;
 let annieNoiseTheta2 = 0;
 // let annieNoiseRadius2 = 55;
