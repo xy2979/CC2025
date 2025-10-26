@@ -54,6 +54,9 @@ class EyeBall {
     let eyeXRadius = (noise(this.noiseR) * this.w) / 2;
     let eyeYRadius = (noise(this.noiseR) * this.h) / 2;
 
+    //console.log(noise(0));
+    //console.log(eyeYRadius);
+
     let eyeX = cos(eyeTheta) * eyeXRadius;
     let eyeY = sin(eyeTheta) * eyeYRadius;
 
