@@ -9,7 +9,7 @@ let annieCurrentX = 0; //current position to draw eye to
 let annieCurrentY = 0;
 
 let annieLerpAmount = 1; //how far into our lerp are we?
-let annieSpeed = 0.05; //how quickly to increment
+let annieSpeed = 0.03; //how quickly to increment
 
 let anniePrevS = 0; //store previous second to 0
 
