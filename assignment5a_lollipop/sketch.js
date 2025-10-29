@@ -5,7 +5,7 @@ let annieNoisePosition2 = 0;
 let annieNoiseSpeed2 = 0.05; // the speed of drawing lollipops
 let annieStartingPoint2 = 0;
 let annieNoiseTheta2 = 0;
- let annieNoiseRadius2 = 150; // let the lollipop draws the circle in radius 150 
+let annieNoiseRadius2 = 150; // let the lollipop draws the circle in radius 150 
 // let annieNoiseRadius3 = 185;
 //let annieNoiseRadius2 = 0;
 let annieNoisePositionAngle2 = 1000; 
@@ -33,8 +33,9 @@ function draw() {
   translate(width / 2, height / 2);
   //get a random theta number between 0-1 and map it to the degree between 0-360
   annieNoiseTheta2 = map(noise(annieNoisePositionAngle2), 0, 1, 0, 360);
-
-  //annieNoiseRadius2 = map(noise(annieNoisePosition2), 0, 1, 0, width / 2); //I don't want to use noise
+  
+  //I don't want to use noise
+  //annieNoiseRadius2 = map(noise(annieNoisePosition2), 0, 1, 0, width / 2); 
 
   //decide the XY position of the orange lollipop
   let annieX2 = cos(annieNoiseTheta2) * annieNoiseRadius2;

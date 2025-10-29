@@ -8,7 +8,7 @@ let annieTargetY = 0;
 let annieCurrentX = 0; //current position to draw eye to
 let annieCurrentY = 0;
 
-let annieLerpAmount = 1; //how far into our lerp are we?
+let annieLerpAmount = 1; //how far into our lerp are we? Setting to 1 means moving 100% of the distance from the start point to the end point.
 let annieSpeed = 0.03; //how quickly to increment
 
 let anniePrevS = 0; //store previous second to 0
@@ -31,7 +31,8 @@ function draw() {
     line(0, x, width, x);
   }
 
-  //decide the XY position of the orange lollipop
+  //decide the current XY position of the orange lollipop
+  //set current position according to lerp functions
   annieCurrentX = lerp(anniePX, annieTargetX, annieLerpAmount);
   annieCurrentY = lerp(anniePY, annieTargetY, annieLerpAmount);
 
@@ -70,6 +71,6 @@ function draw() {
     //set a boundary to avoid the candy out of the screen
     annieTargetX = constrain(annieTargetX, 120, width - 120);
     annieTargetY = constrain(annieTargetY, 40, height - 40);
-    annieLerpAmount = 0;
+    annieLerpAmount = 0; //reset to the previous position, allow it to move from previous point to target point 
   }
 }
