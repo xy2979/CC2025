@@ -30,6 +30,16 @@ function draw() {
   // Draw the webcam video
   image(video, 0, 0, width, height);
 
+  if (faces.length > 0) { //check if face detected
+    let leftEye = faces[0].leftEye.keypoints;
+    let rightEye = faces[0].rightEye.keypoints;
+    beginShape();
+    for (let i = 0; i < leftEye.length; i++){
+      circle(leftEye[i].x, leftEye[i].y, 3);
+    }
+    endShape();
+  }
+
   // Draw all the tracked face points
   for (let i = 0; i < faces.length; i++) {
     let face = faces[i];
