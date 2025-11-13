@@ -34,23 +34,23 @@ function draw() {
   // Draw the webcam video
   image(video, 0, 0, width, height);
 
-  // Draw all the tracked hand points
-  // for (let i = 0; i < hands.length; i++) {
-  //   let hand = hands[i];
-  //   for (let j = 0; j < hand.keypoints.length; j++) {
-  //     let keypoint = hand.keypoints[j];
-  //     fill(0, 255, 0);
-  //     noStroke();
-  //     textSize(20);
-  //     // if (i == 0) {
-  //     //   fill(255, 0, 0);
-  //     // } else {
-  //       fill(0, 255, 0);
-  //     //}
+  //Draw all the tracked hand points
+  for (let i = 0; i < hands.length; i++) {
+    let hand = hands[i];
+    for (let j = 0; j < hand.keypoints.length; j++) {
+      let keypoint = hand.keypoints[j];
+      fill(0, 255, 0);
+      noStroke();
+      textSize(20);
+      // if (i == 0) {
+      //   fill(255, 0, 0);
+      // } else {
+        fill(0, 255, 0);
+      //}
 
-  //     text(j, keypoint.x, keypoint.y);
-  //   }
-  // }
+      text(j, keypoint.x, keypoint.y);
+    }
+  }
 
   if (hands.length > 0) {// are there hands currently being tracked
     //circle(hands[0].keypoints[8].x, hands[0].keypoints[8].y, 10);
