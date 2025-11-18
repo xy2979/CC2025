@@ -71,12 +71,17 @@ function drawCatCradleLines(handA, handB) {
   let eA = dist(thumbA.x, thumbA.y, thumbB.x, thumbB.y);
 
   // when the distance between thumbtip and indextip > 20 and two hands distance > 50
-  let openA = dA > 20;
-  let openB = dB > 20;
-  let twoHandsFar = eA > 50;
+  // let openA = dA > 20;
+  // let openB = dB > 20;
+  // let twoHandsFar = eA > 50;
+
+  if (!(dA > 50 && dB > 50 && eA > 100)) {
+  // 三个条件都成立 → 画线
+    return;
+}
 
   // 只有当两只手都张开的时候才画线
-  if (!(openA && openB&&twoHandsFar)) return;
+  //if (!(openA && openB&&twoHandsFar)) return;
 
   // 把坐标转成 p5.Vector，方便插值
   let thumbAVec = createVector(thumbA.x, thumbA.y);
