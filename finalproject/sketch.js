@@ -70,7 +70,7 @@ function drawCatCradleLines(handA, handB) {
   //calculate the distance between one thumb and another thumb
   let eA = dist(thumbA.x, thumbA.y, thumbB.x, thumbB.y);
 
-  // when the distance between thumbtip and indextip > 20 and two hands distance
+  // when the distance between thumbtip and indextip > 20 and two hands distance > 50
   let openA = dA > 20;
   let openB = dB > 20;
   let twoHandsFar = eA > 50;
