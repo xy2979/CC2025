@@ -157,7 +157,7 @@ function patternDiamond(thumbAVec, indexAVec, thumbBVec, indexBVec) {
 
   for (let i = 0; i < fixedTs.length; i++) {
     let tA = fixedTs[i];
-    let tB = fixedTs[(i + 2) % fixedTs.length]; // 向后偏移 → 形成菱形结构
+    let tB = fixedTs[(i + 2) % fixedTs.length];
 
     let pA = p5.Vector.lerp(thumbAVec, indexAVec, tA);
     let pB = p5.Vector.lerp(thumbBVec, indexBVec, tB);
