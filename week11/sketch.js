@@ -63,7 +63,7 @@ function drawCatCradleLines(handA, handB) {
   let thumbB = handB.keypoints[4];
   let indexB = handB.keypoints[8];
 
-  // calculate the distance between thumb–index in one hand
+  // calculate the distance between thumb–index in two hands
   let dA = dist(thumbA.x, thumbA.y, indexA.x, indexA.y);
   let dB = dist(thumbB.x, thumbB.y, indexB.x, indexB.y);
 
@@ -71,19 +71,12 @@ function drawCatCradleLines(handA, handB) {
   let eA = dist(thumbA.x, thumbA.y, thumbB.x, thumbB.y);
 
   // when the distance between thumbtip and indextip > 20 and two hands distance > 50
-  // let openA = dA > 20;
-  // let openB = dB > 20;
-  // let twoHandsFar = eA > 50;
-
-  if (!(dA > 50 && dB > 50 && eA > 100)) {
-  // 三个条件都成立 → 画线
+  if (!(dA > 20 && dB > 20 && eA > 50)) {
+    // then draw the lines
     return;
-}
+  }
 
-  // 只有当两只手都张开的时候才画线
-  //if (!(openA && openB&&twoHandsFar)) return;
-
-  // 把坐标转成 p5.Vector，方便插值
+  // store the thumbtip and indextip position on both hands
   let thumbAVec = createVector(thumbA.x, thumbA.y);
   let indexAVec = createVector(indexA.x, indexA.y);
   let thumbBVec = createVector(thumbB.x, thumbB.y);
@@ -95,64 +88,21 @@ function drawCatCradleLines(handA, handB) {
   strokeWeight(2);
   noFill();
 
-  for (let i = 0; i < numLines; i++) {
-    // 在 A 手拇指–食指连线之间选一个随机位置
-    let t1 = random(); // 0~1
-    let pA = p5.Vector.lerp(thumbAVec, indexAVec, t1);
+  let catCradlePattern = [0.0, 0.2, 0.4, 0.6, 0.8, 1.0];
 
-    // 在 B 手拇指–食指连线之间选一个随机位置
-    let t2 = random();
-    let pB = p5.Vector.lerp(thumbBVec, indexBVec, t2);
+  for (let i = 0; i < catCradlePattern.length; i++) {
+    let evenlySpacedA = catCradlePattern[i];
+    let evenlySpacedB = 1.0 - evenlySpacedA; // 反向比例 → 形成 X 交叉
 
-    // 加一点 jitter 让线更像“乱线”
-    // let jitterA = createVector(random(-5, 5), random(-5, 5));
-    // let jitterB = createVector(random(-5, 5), random(-5, 5));
-
-    line(
-      pA.x,
-      pA.y,
-      pB.x,
-      pB.y,
-    );
+    //lerp can only interpolate numbers, it cannot interpolate vectors. So I used p5.Vector here
+    let pointA = p5.Vector.lerp(thumbAVec, indexAVec, evenlySpacedA);
+    let pointB = p5.Vector.lerp(thumbBVec, indexBVec, evenlySpacedB);
+    line(pointA.x, pointA.y, pointB.x, pointB.y);
   }
 }
-
-    // for (let j = 0; j < hand.keypoints.length; j++) {
-    //   let keypoint = hand.keypoints[j];
-    //   fill(0, 255, 0);
-    //   noStroke();
-    //   circle(keypoint.x, keypoint.y, 10);
-    // }
-  
-  // are there hands currently being tracked
-  // if (hands.length > 0) {
-  //   let indexTip = hands[0].keypoints[8]; //store the index fingertip
-  //   let thumbTip = hands[0].keypoints[4];
-  //   let centerX = lerp(indexTip.x, thumbTip.x, 0.5);
-  //   let centerY = lerp(indexTip.y, thumbTip.y, 0.5);
-  //   pinch = dist(indexTip.x, indexTip.y, thumbTip.x, thumbTip.y);
-  //   if (pinch < 10) { //this threshold should be scaled to accomodate different depths
-  //     strokeWeight(10);
-  //     if (pinched == false) {
-  //       let coord = createVector(centerX, centerY);
-  //       stars.push(coord);
-  //       //pinched = true;
-  //     }
-  //   } else {
-  //     strokeWeight(1);
-  //     //pinched = false;
-  //   }
-  //   circle(centerX, centerY, pinch);
-
-  //   for (i = 0; i < stars.length; i++){
-  //     circle(stars[i].x, stars[i].y, 10);
-  //   }
-  // }
-// }
 
 // Callback function for when handPose outputs data
 function gotHands(results) {
   // save the output to the hands variable
   hands = results;
 }
-
