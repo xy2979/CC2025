@@ -70,34 +70,28 @@ function drawCatCradleLines(handA, handB) {
   //calculate the distance between one thumb and another thumb
   let eA = dist(thumbA.x, thumbA.y, thumbB.x, thumbB.y);
 
-  // when the distance between thumbtip and indextip > 20 and two hands distance > 50
+  // when the distance between thumbtip and indextip is not > 20 and two hands distance is not > 50
   if (!(dA > 20 && dB > 20 && eA > 50)) {
-    // then draw the lines
+    // then don't draw
     return;
   }
 
-  // store the thumbtip and indextip position on both hands
-  let thumbAVec = createVector(thumbA.x, thumbA.y);
-  let indexAVec = createVector(indexA.x, indexA.y);
-  let thumbBVec = createVector(thumbB.x, thumbB.y);
-  let indexBVec = createVector(indexB.x, indexB.y);
-
-  // 画很多 random 线
-  let numLines = 10; // 线条数量，可调
-  stroke("#46ffbeff");   // 克莱因蓝（你刚问的那个颜色）
+  stroke("#46ffbeff");  
   strokeWeight(2);
   noFill();
 
+  //since I want to use lerp later, so I have to let the numbers between 0-1
   let catCradlePattern = [0.0, 0.2, 0.4, 0.6, 0.8, 1.0];
 
   for (let i = 0; i < catCradlePattern.length; i++) {
     let evenlySpacedA = catCradlePattern[i];
-    let evenlySpacedB = 1.0 - evenlySpacedA; // 反向比例 → 形成 X 交叉
+    let evenlySpacedB = 1.0 - evenlySpacedA; // inverse relationship to shape cross
 
-    //lerp can only interpolate numbers, it cannot interpolate vectors. So I used p5.Vector here
-    let pointA = p5.Vector.lerp(thumbAVec, indexAVec, evenlySpacedA);
-    let pointB = p5.Vector.lerp(thumbBVec, indexBVec, evenlySpacedB);
-    line(pointA.x, pointA.y, pointB.x, pointB.y);
+    let pointAX = lerp(thumbA.x, indexA.y, evenlySpacedA);
+    let pointAY = lerp(thumbA.y, indexA.y, evenlySpacedA);
+    let pointBX = lerp(thumbB.x, indexB.x, evenlySpacedB);
+    let pointBY = lerp(thumbB.y, indexB.y, evenlySpacedB);
+    line(pointAX, pointAY, pointBX, pointBY);
   }
 }
 

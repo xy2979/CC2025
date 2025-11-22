@@ -13,7 +13,8 @@ let currentPattern = 0;     // current pattern
 let lastCondition = false; 
 let currentColor;
 let currentWeight;
-const TOTAL_PATTERNS = 3;     // total patterns
+let hasUpdatedPattern = false; // 
+const TOTAL_PATTERNS = 4;     // total patterns
 
 function preload() {
   // Load the handPose model
@@ -28,6 +29,8 @@ function setup() {
   video.hide();
   // start detecting hands from the webcam video
   handPose.detectStart(video, gotHands);
+  currentColor = color(random(50, 255), random(50, 255), random(50, 255), random(150, 255));
+  currentWeight = random(1, 6);
 }
 
 function draw() {
@@ -76,29 +79,28 @@ function drawCatCradleLines(handA, handB) {
   let eA = dist(thumbA.x, thumbA.y, thumbB.x, thumbB.y);
 
   // How my hands meet the conditions
-  let condition = (dA > 25 && dB > 25 && eA > 150);
+  // let condition = (dA > 3 && dB > 3 && eA > 3);
+  console.log(dA, dB, eA)
 
-  // if the condition meets
-  if (condition && !lastCondition) {
-  // draw a new pattern randomly
-  currentPattern = floor(random(TOTAL_PATTERNS)); 
-    // generate random color
-    currentColor = color(
-      random(50, 255),   // R
-      random(50, 255),   // G
-      random(50, 255),   // B
-      random(150, 255)   // Alpha
-    );
+  // if the current condition is true and the last condition is false
+  if (!hasUpdatedPattern && dA < 20 && dB < 20 && eA < 20) {
+    // draw a new pattern randomly
+    currentPattern = floor(random(TOTAL_PATTERNS)); 
+    // generate random RGB color
+    currentColor = color(random(50, 255), random(50, 255), random(50, 255), random(150, 255));
 
     // generate random strokeweight from 1-6
     currentWeight = random(1, 6);
+    hasUpdatedPattern = true
+  } else {
+    hasUpdatedPattern = false
   }
 
-  // update the previous frame
-  lastCondition = condition;
+  // // update the previous frame
+  // lastCondition = condition;
 
   // Don't draw if not meet the condition
-  if (!condition) return;
+  // if (!condition) return;
 
   // store the thumbtip and indextip position on both hands
   let thumbAVec = createVector(thumbA.x, thumbA.y);
@@ -112,44 +114,56 @@ function drawCatCradleLines(handA, handB) {
 
 // Current Patterns I have
   if (currentPattern === 0) {
-    patternCross(thumbAVec, indexAVec, thumbBVec, indexBVec);
+    patternCross(thumbA.x, thumbA.y, indexA.x,indexA.y, thumbB.x, thumbB.y, indexB.x, indexB.y);
   } else if (currentPattern === 1) {
     patternDoubleCross(thumbAVec, indexAVec, thumbBVec, indexBVec);
   } else if (currentPattern === 2) {
     patternDiamond(thumbAVec, indexAVec, thumbBVec, indexBVec);
+  }else if (currentPattern === 3) {
+    patternSevenCross(thumbA.x, thumbA.y, indexA.x,indexA.y, thumbB.x, thumbB.y, indexB.x, indexB.y);
   }
 }
 
-function patternCross(thumbAVec, indexAVec, thumbBVec, indexBVec) {
+function patternCross(thumbAX, thumbAY, indexAX, indexAY, thumbBX, thumbBY, indexBX, indexBY) {
+  //since I want to use lerp later, so I have to let the numbers between 0-1
   let catCradlePattern = [0.0, 0.2, 0.4, 0.6, 0.8, 1.0];
 
   for (let i = 0; i < catCradlePattern.length; i++) {
     let evenlySpacedA = catCradlePattern[i];
-    let evenlySpacedB = 1.0 - evenlySpacedA; // Use the reversed direction to generate an X-pattern.
-
-    let pointA = p5.Vector.lerp(thumbAVec, indexAVec, evenlySpacedA);
-    let pointB = p5.Vector.lerp(thumbBVec, indexBVec, evenlySpacedB);
-
-    line(pointA.x, pointA.y, pointB.x, pointB.y);
+    let evenlySpacedB = 1.0 - evenlySpacedA; // inverse relationship to shape cross
+    //make the X shape, the distance between thumb and index is evenly distributed
+    let pointAX = lerp(thumbAX, indexAX, evenlySpacedA);
+    let pointAY = lerp(thumbAY, indexAY, evenlySpacedA);
+    let pointBX = lerp(thumbBX, indexBX, evenlySpacedB);
+    let pointBY = lerp(thumbBY, indexBY, evenlySpacedB);
+    line(pointAX, pointAY, pointBX, pointBY);
   }
 }
 
-
-function patternDoubleCross(thumbAVec, indexAVec, thumbBVec, indexBVec) {
-  let catCradlePattern = [0.1, 0.3, 0.5, 0.7, 0.9];
-
-  for (let i = 0; i < catCradlePattern.length; i++) {
-    let t = catCradlePattern[i];
-
-    let pA1 = p5.Vector.lerp(thumbAVec, indexAVec, t);
-    let pB1 = p5.Vector.lerp(thumbBVec, indexBVec, 1 - t);
-    line(pA1.x, pA1.y, pB1.x, pB1.y);
-
-    let pA2 = p5.Vector.lerp(thumbAVec, indexAVec, 1 - t);
-    let pB2 = p5.Vector.lerp(thumbBVec, indexBVec, t);
-    line(pA2.x, pA2.y, pB2.x, pB2.y);
-  }
+function patternSevenCross(thumbAX, thumbAY, indexAX, indexAY, thumbBX, thumbBY, indexBX, indexBY) {
+  //find the middle point from thumb to index in same hand
+  let pointAX = lerp(thumbAX, indexAX, 0.5);
+  let pointAY = lerp(thumbAY, indexAY, 0.5);
+  let pointBX = lerp(thumbBX, indexBX, 0.5);
+  let pointBY = lerp(thumbBY, indexBY, 0.5);
+  // straight line from one thumb to another thumb
+  line(thumbAX, thumbAY, thumbBX, thumbBY);
+  //straight line from one index to another index
+  line(indexAX, indexAY, indexBX, indexBY);
+  // straight line in the middle horizontally
+  line(pointAX, pointAY, pointBX, pointBY);
+  // diagnol straight line 1
+  line(thumbAX, thumbAY, indexBX, indexBY);
+  //diagnol straight line 2
+  line(indexAX, indexAY, thumbBX, thumbBY);
+  //straight line in the middle vertically
+  line((thumbAX + thumbBX) / 2, (thumbAY + thumbBY) / 2, (indexAX + indexBX) / 2, (indexAY + indexBY) / 2);
 }
+
+function patternTwoRectCross(thumbAX, thumbAY, indexAX, indexAY, thumbBX, thumbBY, indexBX, indexBY) {
+  
+}
+
 
 
 function patternDiamond(thumbAVec, indexAVec, thumbBVec, indexBVec) {
