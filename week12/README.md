@@ -8,12 +8,12 @@ Markdown Cheatsheet (from [https://www.markdownguide.org/cheat-sheet/](https://w
 
 ---
 
-# Heading1
-## Heading2
-### Heading3
-#### Heading4
-##### Heading5
-###### Heading6
+### Cat Cradle Patterns I designed
+Image with url:  
+![image description](https://dm-gy-6063-2024f-b.github.io/assets/homework/02/clark-espaco-modulado-00.jpg)
+
+### How I use lerp function to calculate the position
+I use patternCorss as example.
 
 **bold text**
 

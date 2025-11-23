@@ -102,12 +102,6 @@ function drawCatCradleLines(handA, handB) {
   // Don't draw if not meet the condition
   // if (!condition) return;
 
-  // store the thumbtip and indextip position on both hands
-  let thumbAVec = createVector(thumbA.x, thumbA.y);
-  let indexAVec = createVector(indexA.x, indexA.y);
-  let thumbBVec = createVector(thumbB.x, thumbB.y);
-  let indexBVec = createVector(indexB.x, indexB.y);
-
   stroke(currentColor);
   strokeWeight(currentWeight);
   noFill();
@@ -115,12 +109,12 @@ function drawCatCradleLines(handA, handB) {
 // Current Patterns I have
   if (currentPattern === 0) {
     patternCross(thumbA.x, thumbA.y, indexA.x,indexA.y, thumbB.x, thumbB.y, indexB.x, indexB.y);
-  } else if (currentPattern === 1) {
-    patternDoubleCross(thumbAVec, indexAVec, thumbBVec, indexBVec);
-  } else if (currentPattern === 2) {
-    patternDiamond(thumbAVec, indexAVec, thumbBVec, indexBVec);
-  }else if (currentPattern === 3) {
+  }  else if (currentPattern === 1) {
     patternSevenCross(thumbA.x, thumbA.y, indexA.x,indexA.y, thumbB.x, thumbB.y, indexB.x, indexB.y);
+  }else if (currentPattern === 2) {
+    patternDiamondsCross(thumbA.x, thumbA.y, indexA.x,indexA.y, thumbB.x, thumbB.y, indexB.x, indexB.y);
+  }else if (currentPattern === 3) {
+    patternFourTriangleCross(thumbA.x, thumbA.y, indexA.x,indexA.y, thumbB.x, thumbB.y, indexB.x, indexB.y);
   }
 }
 
@@ -160,25 +154,72 @@ function patternSevenCross(thumbAX, thumbAY, indexAX, indexAY, thumbBX, thumbBY,
   line((thumbAX + thumbBX) / 2, (thumbAY + thumbBY) / 2, (indexAX + indexBX) / 2, (indexAY + indexBY) / 2);
 }
 
-function patternTwoRectCross(thumbAX, thumbAY, indexAX, indexAY, thumbBX, thumbBY, indexBX, indexBY) {
-  
+function patternDiamondsCross(thumbAX, thumbAY, indexAX, indexAY, thumbBX, thumbBY, indexBX, indexBY) {
+  //calculate each point on hand A
+  let pointAX = lerp(thumbAX, indexAX, 0.25);
+  let pointAY = lerp(thumbAY, indexAY, 0.25);
+  let pointA1X = lerp(thumbAX, indexAX, 0.5);
+  let pointA1Y = lerp(thumbAY, indexAY, 0.5);
+  let pointA2X = lerp(thumbAX, indexAX, 0.75);
+  let pointA2Y = lerp(thumbAY, indexAY, 0.75);
+
+  //calculate each point on hand B
+  let pointBX = lerp(thumbBX, indexBX, 0.25);
+  let pointBY = lerp(thumbBY, indexBY, 0.25);
+  let pointB1X = lerp(thumbBX, indexBX, 0.5);
+  let pointB1Y = lerp(thumbBY, indexBY, 0.5);
+  let pointB2X = lerp(thumbBX, indexBX, 0.75);
+  let pointB2Y = lerp(thumbBY, indexBY, 0.75);
+
+  //setup each line
+  line(thumbAX, thumbAY, pointB2X, pointB2Y);
+  line(pointAX, pointAY, indexBX, indexBY);
+  line(pointA1X, pointA1Y, thumbBX, thumbBY);
+  line(pointA2X, pointA2Y, pointBX, pointBY);
+  line(indexAX, indexAY, pointB1X, pointB1Y);
 }
 
+function patternFourTriangleCross(thumbAX, thumbAY, indexAX, indexAY, thumbBX, thumbBY, indexBX, indexBY) {
+  //set middle line point
+  let pointAX = lerp(thumbAX, indexAX, 0.5);
+  let pointAY = lerp(thumbAY, indexAY, 0.5);
+  let pointBX = lerp(thumbBX, indexBX, 0.5);
+  let pointBY = lerp(thumbBY, indexBY, 0.5);
+  //top straight line
+  line(thumbAX, thumbAY, thumbBX, thumbBY);
+  //middle straight line
+  line(pointAX, pointAY, pointBX, pointBY);
+  //bottom straight line
+  line(indexAX, indexAY, indexBX, indexBY);
+  //set a variable to store the top line distance
+  let dA = dist(thumbAX, thumbAY, thumbBX, thumbBY);
+  // //set a variable to store the middle line distance
+  // let dB = dist(pointAX, pointAY, pointBX, pointBY);
+  //set a variable to store the middle line distance
+  let dC = dist(indexAX, indexAY, indexBX, indexBY);
+  //draw the four traingles using line function
+  line(pointAX, pointAY, thumbAX + dA / 3, thumbAY);
+  line(thumbAX + dA / 3, thumbAY, indexAX + (dC / 3) * 2, indexAY);
+  line(indexAX + (dC / 3) * 2, indexAY, pointBX, pointBY);
+  line(pointBX, pointBY, thumbAX + (dA / 3) * 2, thumbAY);
+  line(thumbAX + (dA / 3) * 2, thumbAY, indexAX + dC / 3, indexAY);
+  line(indexAX + dC / 3, indexAY, pointAX, pointAY);
 
-
-function patternDiamond(thumbAVec, indexAVec, thumbBVec, indexBVec) {
-  let fixedTs = [0.05, 0.25, 0.45, 0.65, 0.9];
-
-  for (let i = 0; i < fixedTs.length; i++) {
-    let tA = fixedTs[i];
-    let tB = fixedTs[(i + 2) % fixedTs.length];
-
-    let pA = p5.Vector.lerp(thumbAVec, indexAVec, tA);
-    let pB = p5.Vector.lerp(thumbBVec, indexBVec, tB);
-
-    line(pA.x, pA.y, pB.x, pB.y);
-  }
 }
+
+// function patternDiamond(thumbAVec, indexAVec, thumbBVec, indexBVec) {
+//   let fixedTs = [0.05, 0.25, 0.45, 0.65, 0.9];
+
+//   for (let i = 0; i < fixedTs.length; i++) {
+//     let tA = fixedTs[i];
+//     let tB = fixedTs[(i + 2) % fixedTs.length];
+
+//     let pA = p5.Vector.lerp(thumbAVec, indexAVec, tA);
+//     let pB = p5.Vector.lerp(thumbBVec, indexBVec, tB);
+
+//     line(pA.x, pA.y, pB.x, pB.y);
+//   }
+// }
 
 
 // Callback function for when handPose outputs data
