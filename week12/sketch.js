@@ -96,11 +96,6 @@ function drawCatCradleLines(handA, handB) {
     hasUpdatedPattern = false
   }
 
-  // // update the previous frame
-  // lastCondition = condition;
-
-  // Don't draw if not meet the condition
-  // if (!condition) return;
 
   stroke(currentColor);
   strokeWeight(currentWeight);
