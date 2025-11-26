@@ -14,7 +14,7 @@ let lastCondition = false;
 let currentColor;
 let currentWeight;
 let hasUpdatedPattern = false; // 
-const TOTAL_PATTERNS = 4;     // total patterns
+const TOTAL_PATTERNS = 6;     // total patterns
 
 function preload() {
   // Load the handPose model
@@ -115,6 +115,10 @@ function drawCatCradleLines(handA, handB) {
     patternDiamondsCross(thumbA.x, thumbA.y, indexA.x,indexA.y, thumbB.x, thumbB.y, indexB.x, indexB.y);
   }else if (currentPattern === 3) {
     patternFourTriangleCross(thumbA.x, thumbA.y, indexA.x,indexA.y, thumbB.x, thumbB.y, indexB.x, indexB.y);
+  }else if (currentPattern === 4) {
+    patternBowShape(thumbA.x, thumbA.y, indexA.x,indexA.y, thumbB.x, thumbB.y, indexB.x, indexB.y);
+  }else if (currentPattern === 5) {
+    patternGrid(thumbA.x, thumbA.y, indexA.x,indexA.y, thumbB.x, thumbB.y, indexB.x, indexB.y);
   }
 }
 
@@ -206,6 +210,59 @@ function patternFourTriangleCross(thumbAX, thumbAY, indexAX, indexAY, thumbBX, t
   line(indexAX + dC / 3, indexAY, pointAX, pointAY);
 
 }
+
+function patternBowShape(thumbAX, thumbAY, indexAX, indexAY, thumbBX, thumbBY, indexBX, indexBY) {
+  //draw the top line
+  line(indexAX, indexAY, indexBX, indexBY);
+  //draw the diagnol line 1
+  line(indexAX, indexAY, thumbBX, thumbBY);
+  //draw the diagnol line 2
+  line(indexBX, indexBY, thumbAX, thumbAY);
+  
+  //find the middle point from thumb to index in same hand
+  let pointAX = lerp(thumbAX, indexAX, 0.5);
+  let pointAY = lerp(thumbAY, indexAY, 0.5);
+  let pointBX = lerp(thumbBX, indexBX, 0.5);
+  let pointBY = lerp(thumbBY, indexBY, 0.5);
+  //draw the middle line
+  line(pointAX, pointAY, pointBX, pointBY);
+  //draw the bottom line
+  line(thumbAX, thumbAY, thumbBX, thumbBY);
+  //draw the left vertical line
+  line(indexAX, indexAY, pointAX, pointAY);
+  //draw the right vertical line
+  line(indexBX, indexBY, pointBX, pointBY);
+  // //draw the bottom part of the bow
+  // let bottomX = dist(thumbAX, thumbAY, thumbBX, thumbBY) / 3;
+  // line(indexBX, indexBY, thumbAX + bottomX, thumbAY);
+  // line(indexAX, indexAY, thumbAX + bottomX * 2, thumbAY);
+}
+
+function patternGrid(thumbAX, thumbAY, indexAX, indexAY, thumbBX, thumbBY, indexBX, indexBY) {
+  //draw the horizontal lines
+  let gridPattern1 = [0.0, 0.25, 0.5, 0.75, 1.0];
+  for (let i = 0; i < gridPattern1.length; i++) {
+    let evenlySpacedA = gridPattern1[i];
+    //draw the horizontal lines evenly
+    let pointAX = lerp(thumbAX, indexAX, evenlySpacedA);
+    let pointAY = lerp(thumbAY, indexAY, evenlySpacedA);
+    let pointBX = lerp(thumbBX, indexBX, evenlySpacedA);
+    let pointBY = lerp(thumbBY, indexBY, evenlySpacedA);
+    line(pointAX, pointAY, pointBX, pointBY);
+  }
+  //draw the vertical lines
+    let gridPattern2 = [0.0, 0.16, 0.32, 0.48, 0.64, 0.8, 1.0];
+    for (let i = 0; i < gridPattern2.length; i++) {
+    let evenlySpacedB = gridPattern2[i];
+    //draw the horizontal lines evenly
+    let pointAX = lerp(thumbAX, thumbBX, evenlySpacedB);
+    let pointAY = lerp(thumbAY, thumbBY, evenlySpacedB);
+    let pointBX = lerp(indexAX, indexBX, evenlySpacedB);
+    let pointBY = lerp(indexAY, indexBY, evenlySpacedB);
+    line(pointAX, pointAY, pointBX, pointBY);
+  }
+}
+
 
 // function patternDiamond(thumbAVec, indexAVec, thumbBVec, indexBVec) {
 //   let fixedTs = [0.05, 0.25, 0.45, 0.65, 0.9];
