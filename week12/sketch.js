@@ -263,22 +263,6 @@ function patternGrid(thumbAX, thumbAY, indexAX, indexAY, thumbBX, thumbBY, index
   }
 }
 
-
-// function patternDiamond(thumbAVec, indexAVec, thumbBVec, indexBVec) {
-//   let fixedTs = [0.05, 0.25, 0.45, 0.65, 0.9];
-
-//   for (let i = 0; i < fixedTs.length; i++) {
-//     let tA = fixedTs[i];
-//     let tB = fixedTs[(i + 2) % fixedTs.length];
-
-//     let pA = p5.Vector.lerp(thumbAVec, indexAVec, tA);
-//     let pB = p5.Vector.lerp(thumbBVec, indexBVec, tB);
-
-//     line(pA.x, pA.y, pB.x, pB.y);
-//   }
-// }
-
-
 // Callback function for when handPose outputs data
 function gotHands(results) {
   // save the output to the hands variable
