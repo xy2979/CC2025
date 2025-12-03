@@ -24,17 +24,19 @@ let hasUpdatedPattern = false; //trigger new pattern any time
 const TOTAL_PATTERNS = 6;     // total patterns
 let sentences = [
   "Your turn. My turn. The string remembers.",
-  "No words—just hands finding hands.",
+  "No words. Just hands finding hands.",
   "You pull, I follow. A new shape begins.",
   "Tiny moves. Big magic.",
-  "Hold still—here comes the next secret.",
+  "Hold still. Here comes the next secret.",
   "Again? Yes. The string likes us."
 ];
 let currentSentence = sentences[0];
+let popSound;
 
 function preload() {
   // Load the handPose model
   handPose = ml5.handPose();
+  popSound = loadSound('pop.mp3');
 }
 
 function setup() {
@@ -42,7 +44,7 @@ function setup() {
   createCanvas(windowWidth,windowHeight);
   // Create the webcam video and hide it
   video = createCapture(VIDEO);
-  video.size(windowWidth/1.618, windowHeight/1.618);
+  video.size(640, 480); //640, 480
   video.hide();
   // start detecting hands from the webcam video
   handPose.detectStart(video, gotHands);
@@ -69,12 +71,12 @@ function setup() {
   text('Color Style', 100, 380);
   
   //create stroke weight slider///////////////////
-  thicknessSlider = createSlider(1, 15, 3); 
+  thicknessSlider = createSlider(1, 15, 6); 
   thicknessSlider.position(230, 285);
   thicknessSlider.style('accent-color', '#53f6caff');
   
   //create opacity slider///////////////////////
-  alphaSlider = createSlider(10, 255, 100);
+  alphaSlider = createSlider(10, 255, 255);
   alphaSlider.position(180, 325);
   alphaSlider.style('accent-color', '#53f6caff');
   
@@ -93,7 +95,7 @@ function setup() {
   colorStyleRadio.option("Monochrome");
   colorStyleRadio.option("Random");
   // default value is Monochrome
-  colorStyleRadio.selected("Monochrome");
+  colorStyleRadio.selected("Random");
   
   //picker initialization
   monoPicker = createColorPicker('white');
@@ -103,8 +105,21 @@ function setup() {
 
 function draw() {
   // Draw the webcam video
-  image(video, 500, 100, width, height); //change here to shift video draw origin (top left corner)
-
+  push();
+  translate(700, 150);
+  video.loadPixels(); // load pixel data into array
+  for (let i = 0; i < video.pixels.length; i += 4){ // go through array by intervals of 4 (rgba)
+    let r = video.pixels[i + 0]; // red component of pixel
+    let g = video.pixels[i + 1];
+    let b = video.pixels[i + 2];
+    let avg = (r + g + b) / 2;
+    video.pixels[i*1.5 + 0] = avg; // average all color data and copy average into r g and b numbers
+    video.pixels[i*1.5 + 1] = avg;
+    video.pixels[i*1.5 + 2] = avg;
+  }
+  video.updatePixels(); // copy image array back into image variable
+  image(video, 0, 0, 640, 480); //change here to shift video draw origin (top left corner)
+  //filter(GRAY); // this makes the image black and white, but slows everything down
   // when detect two hands, draw cat cradle line
   if (hands.length >=2) {
     drawCatCradleLines(hands[0], hands[1]);
@@ -122,7 +137,7 @@ function draw() {
     let d = dist(thumbTip.x, thumbTip.y, indexTip.x, indexTip.y);
     //if the distance between thumbtip and indextip are < 20
     //the circles will be green
-    if (d < 20) {
+    if (d < 30) {
       fill("#46ffbeff");  // green
     } else {
       fill(255);          // white
@@ -130,12 +145,19 @@ function draw() {
     noStroke();
     circle(indexTip.x, indexTip.y, 17);
   }
+  fill(255,0,0);
+  rect(0, 0, 640, -200); // above rectangle
+  rect(640, 0, 200, 480); // right rectangle
+  rect(640, 0, -200, 480); // left rectangle
+  rect(0, 480, 640, 200); // below rectangle
+  pop();
+
   
   //draw the dialogues randomly
   //use the rectangle to cover the previous frame
   fill(10);
   noStroke();
-  rect(70, 450, 400, 300);
+  rect(70, 450, 600, 500);
   //dialogue
   textSize(25);
   fill("white");
@@ -169,10 +191,11 @@ function drawCatCradleLines(handA, handB) {
   //console.log(dA, dB, eA)
 
   // if the current condition is true and the last condition is false
-  if (!hasUpdatedPattern && dA < 20 && dB < 20 && eA < 20) {
+  if (!hasUpdatedPattern && dA < 30 && dB < 30 && eA < 30) {
     currentSentence = random(sentences);
     // draw a new pattern randomly
     currentPattern = floor(random(TOTAL_PATTERNS)); 
+    popSound.play();
     hasUpdatedPattern = true; //once it's true, don't trigger a new pattern
   } else {
     hasUpdatedPattern = false; //trigger a new pattern
