@@ -17,11 +17,20 @@ let handPose;
 let video;
 let hands = [];
 let currentPattern = 0;     // current pattern
-let lastCondition = false; 
+//let lastCondition = false; 
 let currentColor;
 let currentWeight;
-let hasUpdatedPattern = false; // 
+let hasUpdatedPattern = false; //trigger new pattern any time
 const TOTAL_PATTERNS = 6;     // total patterns
+let sentences = [
+  "Your turn. My turn. The string remembers.",
+  "No words—just hands finding hands.",
+  "You pull, I follow. A new shape begins.",
+  "Tiny moves. Big magic.",
+  "Hold still—here comes the next secret.",
+  "Again? Yes. The string likes us."
+];
+let currentSentence = sentences[0];
 
 function preload() {
   // Load the handPose model
@@ -29,20 +38,72 @@ function preload() {
 }
 
 function setup() {
-  createCanvas(640,480);
+  ///ml5js Part/////////////////////////////////////
+  createCanvas(windowWidth,windowHeight);
   // Create the webcam video and hide it
   video = createCapture(VIDEO);
-  video.size(640, 480);
+  video.size(windowWidth/1.618, windowHeight/1.618);
   video.hide();
   // start detecting hands from the webcam video
   handPose.detectStart(video, gotHands);
-  currentColor = color(random(50, 255), random(50, 255), random(50, 255), random(150, 255));
-  currentWeight = random(1, 6);
+  // currentColor = color(random(50, 255), random(50, 255), random(50, 255), random(150, 255));
+  // currentWeight = random(1, 6);
+
+  //UI Part///////////////////////////////////////
+  background(10);
+  fill("white");
+  //title
+  textSize(50);
+  textFont("Gamja Flower");
+  text('Silent Strings', 30, 50);
+  textSize(25);
+  textFont("Schoolbell");
+  //text for instruction
+  text('Thumb + Index Open = Show Pattern', 100, 200);
+  text('Pinch Thumb + Index Together = Change Pattern', 100, 240);
+  
+  //text for sliders/////////////////////
+  textSize(20);
+  text('Stroke Weight', 100, 300);
+  text('Opacity', 100, 340);
+  text('Color Style', 100, 380);
+  
+  //create stroke weight slider///////////////////
+  thicknessSlider = createSlider(1, 15, 3); 
+  thicknessSlider.position(230, 285);
+  thicknessSlider.style('accent-color', '#53f6caff');
+  
+  //create opacity slider///////////////////////
+  alphaSlider = createSlider(10, 255, 100);
+  alphaSlider.position(180, 325);
+  alphaSlider.style('accent-color', '#53f6caff');
+  
+  //Create color style radio button////////////////
+  colorStyleRadio = createRadio();
+  colorStyleRadio.position(200, 365);
+  //font color
+  colorStyleRadio.style('color', '#ffffffff');
+  //radio color
+  colorStyleRadio.style('accent-color', '#53f6caff');
+  //font
+  colorStyleRadio.style('font-family', 'Schoolbell');
+  //font size
+  colorStyleRadio.style('font-size', '16px');
+  colorStyleRadio.style('margin', '6px 10');  
+  colorStyleRadio.option("Monochrome");
+  colorStyleRadio.option("Random");
+  // default value is Monochrome
+  colorStyleRadio.selected("Monochrome");
+  
+  //picker initialization
+  monoPicker = createColorPicker('white');
+  monoPicker.position(200, 400);
+  /////////////////////////////////////
 }
 
 function draw() {
   // Draw the webcam video
-  image(video, 0, 0, width, height); //change here to shift video draw origin (top left corner)
+  image(video, 500, 100, width, height); //change here to shift video draw origin (top left corner)
 
   // when detect two hands, draw cat cradle line
   if (hands.length >=2) {
@@ -67,8 +128,18 @@ function draw() {
       fill(255);          // white
     }
     noStroke();
-    circle(indexTip.x, indexTip.y, 12);
+    circle(indexTip.x, indexTip.y, 17);
   }
+  
+  //draw the dialogues randomly
+  //use the rectangle to cover the previous frame
+  fill(10);
+  noStroke();
+  rect(70, 450, 400, 300);
+  //dialogue
+  textSize(25);
+  fill("white");
+  text(currentSentence, 100, 550);
 }
 
 function drawCatCradleLines(handA, handB) {
@@ -85,27 +156,30 @@ function drawCatCradleLines(handA, handB) {
   //calculate the distance between one thumb and another thumb
   let eA = dist(thumbA.x, thumbA.y, thumbB.x, thumbB.y);
 
-  // How my hands meet the conditions
-  // let condition = (dA > 3 && dB > 3 && eA > 3);
-  console.log(dA, dB, eA)
+  let w = thicknessSlider.value();
+  let a = alphaSlider.value();
+  let c;
+
+  if (colorStyleRadio.value() == "Monochrome") {
+    c = monoPicker.color();
+  } else if (colorStyleRadio.value() == "Random") {
+    c = color(random(50, 255), random(50, 255), random(50, 255), random(150, 255));
+  }
+
+  //console.log(dA, dB, eA)
 
   // if the current condition is true and the last condition is false
   if (!hasUpdatedPattern && dA < 20 && dB < 20 && eA < 20) {
+    currentSentence = random(sentences);
     // draw a new pattern randomly
     currentPattern = floor(random(TOTAL_PATTERNS)); 
-    // generate random RGB color
-    currentColor = color(random(50, 255), random(50, 255), random(50, 255), random(150, 255));
-
-    // generate random strokeweight from 1-6
-    currentWeight = random(1, 6);
-    hasUpdatedPattern = true
+    hasUpdatedPattern = true; //once it's true, don't trigger a new pattern
   } else {
-    hasUpdatedPattern = false
+    hasUpdatedPattern = false; //trigger a new pattern
   }
-
-
-  stroke(currentColor);
-  strokeWeight(currentWeight);
+  c.setAlpha(a);
+  strokeWeight(w);
+  stroke(c);
   noFill();
 
 // Current Patterns I have

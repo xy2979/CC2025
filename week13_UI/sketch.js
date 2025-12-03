@@ -9,34 +9,34 @@ function setup() {
   background(10);
   fill("white");
   //title
-  textSize(40);
+  textSize(50);
   textFont("Gamja Flower");
   text('Silent Strings', 30, 50);
-  textSize(19);
+  textSize(25);
   textFont("Schoolbell");
   //text for instruction
-  text('Thumb + Index Open = Show Pattern', 600, 100);
-  text('Pinch Thumb + Index Together = Change Pattern', 600, 130);
+  text('Thumb + Index Open = Show Pattern', 100, 200);
+  text('Pinch Thumb + Index Together = Change Pattern', 100, 240);
   
   //text for sliders/////////////////////
-  textSize(15);
-  text('Stroke Weight', 600, 190);
-  text('Opacity', 600, 220);
-  text('Color Style', 600, 250);
+  textSize(20);
+  text('Stroke Weight', 100, 300);
+  text('Opacity', 100, 340);
+  text('Color Style', 100, 380);
   
   //create stroke weight slider///////////////////
   thicknessSlider = createSlider(1, 15, 3); 
-  thicknessSlider.position(710, 175);
+  thicknessSlider.position(230, 285);
   thicknessSlider.style('accent-color', '#53f6caff');
   
   //create opacity slider///////////////////////
   alphaSlider = createSlider(10, 255, 100);
-  alphaSlider.position(660, 205);
+  alphaSlider.position(180, 325);
   alphaSlider.style('accent-color', '#53f6caff');
   
   //Create color style radio button////////////////
   colorStyleRadio = createRadio();
-  colorStyleRadio.position(680, 235);
+  colorStyleRadio.position(200, 365);
   //font color
   colorStyleRadio.style('color', '#ffffffff');
   //radio color
@@ -44,7 +44,7 @@ function setup() {
   //font
   colorStyleRadio.style('font-family', 'Schoolbell');
   //font size
-  colorStyleRadio.style('font-size', '14px');
+  colorStyleRadio.style('font-size', '16px');
   colorStyleRadio.style('margin', '6px 10');  
   colorStyleRadio.option("Monochrome");
   colorStyleRadio.option("Random");
@@ -53,7 +53,7 @@ function setup() {
   
   //picker initialization
   monoPicker = createColorPicker('white');
-  monoPicker.position(700, 260);
+  monoPicker.position(200, 400);
 
 }
 
