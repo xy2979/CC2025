@@ -44,7 +44,7 @@ function setup() {
   createCanvas(windowWidth,windowHeight);
   // Create the webcam video and hide it
   video = createCapture(VIDEO);
-  video.size(640, 480); //640, 480
+  video.size(640, 480); 
   video.hide();
   // start detecting hands from the webcam video
   handPose.detectStart(video, gotHands);
@@ -107,6 +107,7 @@ function draw() {
   // Draw the webcam video
   push();
   translate(700, 150);
+  //filter part/////////////
   video.loadPixels(); // load pixel data into array
   for (let i = 0; i < video.pixels.length; i += 4){ // go through array by intervals of 4 (rgba)
     let r = video.pixels[i + 0]; // red component of pixel
@@ -132,6 +133,7 @@ function draw() {
     fill(255);
     noStroke();
     circle(thumbTip.x, thumbTip.y, 12);
+    //look up setINTERVAL 
 
     let indexTip = hand.keypoints[8]; //store the indextip
     let d = dist(thumbTip.x, thumbTip.y, indexTip.x, indexTip.y);
@@ -145,10 +147,10 @@ function draw() {
     noStroke();
     circle(indexTip.x, indexTip.y, 17);
   }
-  fill(255,0,0);
+  fill(10);
   rect(0, 0, 640, -200); // above rectangle
   rect(640, 0, 200, 480); // right rectangle
-  rect(640, 0, -200, 480); // left rectangle
+  rect(0, 0, -200, 480); // left rectangle
   rect(0, 480, 640, 200); // below rectangle
   pop();
 
