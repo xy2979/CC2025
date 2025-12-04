@@ -32,14 +32,19 @@ let sentences = [
 ];
 let currentSentence = sentences[0];
 let popSound;
+let bgSound;
 
 function preload() {
   // Load the handPose model
   handPose = ml5.handPose();
   popSound = loadSound('pop.mp3');
+  bgSound = loadSound('bgmusic.mp3');
 }
 
 function setup() {
+  bgSound.play();
+  bgSound.setVolume(0.5);
+  bgSound.loop();
   ///ml5js Part/////////////////////////////////////
   createCanvas(windowWidth,windowHeight);
   // Create the webcam video and hide it
