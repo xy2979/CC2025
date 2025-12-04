@@ -1,61 +1,17 @@
-# template
+# Final Project: Mirror – Silent String
 
 ---
+### Abstract of the concept
+The inspiration for this project comes from playing cat’s cradle with my friends when I was a child. We didn’t talk when we played — we communicated through our hands and our shared rhythm. In this project, I use p5.js and ml5.js to turn the hand gestures of cat’s cradle, and each pattern becomes a sentence. These sentences will also appear at the bottom left corner of the screen. The concept is about childhood trust, silent communication, and using hand gesture as language.
 
-This is a README file that can be used to describe and document your assignment.
-
-Markdown Cheatsheet (from [https://www.markdownguide.org/cheat-sheet/](https://www.markdownguide.org/cheat-sheet/)):
-
----
-
-### Cat Cradle Patterns I designed
-Image with url:  
-![image description](https://dm-gy-6063-2024f-b.github.io/assets/homework/02/clark-espaco-modulado-00.jpg)
+### Cat's Cradle Patterns I designed
+I designed 6 patterns in total. 
+![image description](./CatPattern.png)
 
 ### How I use lerp function to calculate the position
 I use patternCorss as example.
+![image description](./Howtolerp.png)
 
-**bold text**
-
-*italicized text*
-
-~~strikethrough text~~
-
-Ordered List:
-1. First item
-2. Second item
-3. Third item
-
-Unordered List:
-- First item
-- Second item
-- Third item
-
-`short code block`
-
-```
-extended code block
-fun() {
-  return 0
-}
-```
-
-Link:  
-[linked text](https://www.example.com)
-
-
-Image with url:  
-![image description](https://dm-gy-6063-2024f-b.github.io/assets/homework/02/clark-espaco-modulado-00.jpg)
-
-
-Image on repo:  
-![image description](./file-name.jpg)
-
-
-To start a new line, add two spaces at the end of a line, like this:  
-this is a new line.
-
-
-To start a new paragraph, leave an empty line between two lines of text.
-
-This is a new paragraph.
+### Drafts of my User Interface
+I designed horizontal and vertical versions.
+![image description](./DraftsofUI.png)
