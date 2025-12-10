@@ -20,7 +20,8 @@ let currentPattern = 0;     // current pattern
 //let lastCondition = false; 
 let currentColor;
 let currentWeight;
-let hasUpdatedPattern = false; //trigger new pattern any time
+//has not updated the pattern yet, need to trigger a new pattern update
+let hasUpdatedPattern = false; 
 const TOTAL_PATTERNS = 6;     // total patterns
 let sentences = [
   "Your turn. My turn. The string remembers.",
@@ -38,7 +39,7 @@ function preload() {
   // Load the handPose model
   handPose = ml5.handPose();
   popSound = loadSound('pop.mp3');
-  bgSound = loadSound('bgmusic.mp3');
+  //bgSound = loadSound('bgmusic.mp3');
 }
 
 function setup() {
@@ -138,7 +139,7 @@ function draw() {
 
     let indexTip = hand.keypoints[8]; //store the indextip
     let d = dist(thumbTip.x, thumbTip.y, indexTip.x, indexTip.y);
-    //if the distance between thumbtip and indextip are < 20
+    //if the distance between thumbtip and indextip are < 30
     //the circles will be green
     if (d < 30) {
       fill("#46ffbeff");  // green
@@ -148,10 +149,11 @@ function draw() {
     noStroke();
     circle(indexTip.x, indexTip.y, 17);
   }
+  //Prevent track points from overflowing the screen
   fill(10);
   rect(0, 0, 640, -200); // above rectangle
-  rect(640, 0, 200, 480); // right rectangle
-  rect(0, 0, -200, 480); // left rectangle
+  rect(640, 0, 200, 500); // right rectangle
+  rect(0, 0, -200, 500); // left rectangle
   rect(0, 480, 640, 200); // below rectangle
   pop();
 
@@ -181,9 +183,10 @@ function drawCatCradleLines(handA, handB) {
   //calculate the distance between one thumb and another thumb
   let eA = dist(thumbA.x, thumbA.y, thumbB.x, thumbB.y);
 
+  //set variables to store the User Interface Value
   let w = thicknessSlider.value();
   let a = alphaSlider.value();
-  let c;
+  let c; //store the value of stroke color
 
   if (colorStyleRadio.value() == "Monochrome") {
     c = monoPicker.color();
@@ -191,19 +194,17 @@ function drawCatCradleLines(handA, handB) {
     c = color(random(50, 255), random(50, 255), random(50, 255), random(150, 255));
   }
 
-  //console.log(dA, dB, eA)
-
-  // if the current condition is true and the last condition is false
-  if (!hasUpdatedPattern && dA < 30 && dB < 30 && eA < 30) {
+  // if dis<30, and the pattern has not updated in the previous frame
+  if (hasUpdatedPattern == false && dA < 30 && dB < 30 && eA < 30) {
     currentSentence = random(sentences);
     // draw a new pattern randomly
     currentPattern = floor(random(TOTAL_PATTERNS)); 
     popSound.play();
-    hasUpdatedPattern = true; //once it's true, don't trigger a new pattern
-  } else {
-    hasUpdatedPattern = false; //trigger a new pattern
+    hasUpdatedPattern = true; //has already updated a new pattern
+  } else { //when dis>30, or it has already updated in the previous frame, skip update, don't trigger a new pattern
+    hasUpdatedPattern = false; 
   }
-  c.setAlpha(a);
+  c.setAlpha(a); //change the stroke color's opacity
   strokeWeight(w);
   stroke(c);
   noFill();
@@ -212,7 +213,7 @@ function drawCatCradleLines(handA, handB) {
   if (currentPattern === 0) {
     patternCross(thumbA.x, thumbA.y, indexA.x,indexA.y, thumbB.x, thumbB.y, indexB.x, indexB.y);
   }  else if (currentPattern === 1) {
-    patternSevenCross(thumbA.x, thumbA.y, indexA.x,indexA.y, thumbB.x, thumbB.y, indexB.x, indexB.y);
+    patternSixCross(thumbA.x, thumbA.y, indexA.x,indexA.y, thumbB.x, thumbB.y, indexB.x, indexB.y);
   }else if (currentPattern === 2) {
     patternDiamondsCross(thumbA.x, thumbA.y, indexA.x,indexA.y, thumbB.x, thumbB.y, indexB.x, indexB.y);
   }else if (currentPattern === 3) {
@@ -240,7 +241,7 @@ function patternCross(thumbAX, thumbAY, indexAX, indexAY, thumbBX, thumbBY, inde
   }
 }
 
-function patternSevenCross(thumbAX, thumbAY, indexAX, indexAY, thumbBX, thumbBY, indexBX, indexBY) {
+function patternSixCross(thumbAX, thumbAY, indexAX, indexAY, thumbBX, thumbBY, indexBX, indexBY) {
   //find the middle point from thumb to index in same hand
   let pointAX = lerp(thumbAX, indexAX, 0.5);
   let pointAY = lerp(thumbAY, indexAY, 0.5);
