@@ -42,9 +42,6 @@ function preload() {
 }
 
 function setup() {
-  bgSound.play();
-  bgSound.setVolume(0.5);
-  bgSound.loop();
   ///ml5js Part/////////////////////////////////////
   createCanvas(windowWidth,windowHeight);
   // Create the webcam video and hide it
@@ -138,7 +135,6 @@ function draw() {
     fill(255);
     noStroke();
     circle(thumbTip.x, thumbTip.y, 12);
-    //look up setINTERVAL 
 
     let indexTip = hand.keypoints[8]; //store the indextip
     let d = dist(thumbTip.x, thumbTip.y, indexTip.x, indexTip.y);
