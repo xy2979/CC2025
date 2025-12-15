@@ -10,9 +10,11 @@ I designed 6 patterns in total.
 
 ### References
 In order to change the style of slider and radio buttons, I looked up several websites.
-Change the *slider/button color*: https://web.dev/articles/accent-color
-Change the *font color*: https://p5js.org/reference/p5.Element/style/
-Change the *button font family*: https://discourse.processing.org/t/how-do-i-change-the-font-that-is-used-by-a-button-in-p5/24887
+Change the **slider/button color**: https://web.dev/articles/accent-color
+
+Change the **font color**: https://p5js.org/reference/p5.Element/style/
+
+Change the **button font family**: https://discourse.processing.org/t/how-do-i-change-the-font-that-is-used-by-a-button-in-p5/24887
 
 Here's the reference link to the filter: https://editor.p5js.org/suryakanti/sketches/ShAfwOCq2
 
