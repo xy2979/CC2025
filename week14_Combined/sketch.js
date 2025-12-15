@@ -38,6 +38,7 @@ let bgSound;
 function preload() {
   // Load the handPose model
   handPose = ml5.handPose();
+  // Load sound https://openprocessing.org/sketch/2085458#page-2
   popSound = loadSound('pop.mp3');
   //bgSound = loadSound('bgmusic.mp3');
 }
@@ -76,25 +77,32 @@ function setup() {
   //create stroke weight slider///////////////////
   thicknessSlider = createSlider(1, 15, 6); 
   thicknessSlider.position(230, 285);
-  thicknessSlider.style('accent-color', '#53f6caff');
+  //In order to change the slider color, I looked up CSS code and I refered to this link to change the color of slider
+  //https://web.dev/articles/accent-color
+  thicknessSlider.style('accent-color', '#53f6caff'); 
   
   //create opacity slider///////////////////////
   alphaSlider = createSlider(10, 255, 255);
   alphaSlider.position(180, 325);
+  //In order to change the slider color, I looked up CSS code and I refered to this link to change the color of slider
+  //https://web.dev/articles/accent-color
   alphaSlider.style('accent-color', '#53f6caff');
   
   //Create color style radio button////////////////
   colorStyleRadio = createRadio();
   colorStyleRadio.position(200, 365);
-  //font color
+  //font color https://p5js.org/reference/p5.Element/style/
   colorStyleRadio.style('color', '#ffffffff');
   //radio color
+  //In order to change the button color, I looked up CSS code and I refered to this link to change the color of button
+  //https://web.dev/articles/accent-color
   colorStyleRadio.style('accent-color', '#53f6caff');
   //font
+  //I found this link about changing button's font-family https://discourse.processing.org/t/how-do-i-change-the-font-that-is-used-by-a-button-in-p5/24887
   colorStyleRadio.style('font-family', 'Schoolbell');
   //font size
   colorStyleRadio.style('font-size', '16px');
-  colorStyleRadio.style('margin', '6px 10');  
+  //add buttons options
   colorStyleRadio.option("Monochrome");
   colorStyleRadio.option("Random");
   // default value is Monochrome
@@ -111,6 +119,7 @@ function draw() {
   push();
   translate(700, 150);
   //filter part/////////////
+  //ask Craig during the office hours and here's the reference link https://editor.p5js.org/suryakanti/sketches/ShAfwOCq2
   video.loadPixels(); // load pixel data into array
   for (let i = 0; i < video.pixels.length; i += 4){ // go through array by intervals of 4 (rgba)
     let r = video.pixels[i + 0]; // red component of pixel
