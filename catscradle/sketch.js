@@ -61,7 +61,7 @@ function setup() {
   //title
   textSize(50);
   textFont("Gamja Flower");
-  text('Silent Strings', 30, 50);
+  text('Cyber Stringcraft', 30, 50);
   textSize(25);
   textFont("Schoolbell");
   //text for instruction
